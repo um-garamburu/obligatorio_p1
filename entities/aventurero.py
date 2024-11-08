@@ -24,3 +24,5 @@ class Aventurero(ABC):
     def dinero(self):
         return self.__dinero
                 
+    def __eq__(self, nuevo_aventurero):
+        self.__id = nuevo_aventurero.id
