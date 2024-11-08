@@ -1,4 +1,5 @@
 from entities import Guerrero, Mago, Mascota, MisionGrupal, MisionIndividual, Ranger
+from exceptions import InformacionInvalida
 
 
 class Gremio:
@@ -14,8 +15,38 @@ class Gremio:
     def aventureros(self):
         return self.__aventureros
 
-    def registrar_aventurero(self):
-        pass
+    def registrar_aventurero(
+        self,
+        clase: int,
+        nombre: str,
+        id: int,
+        ptos_habilidad: int,
+        experiencia: int,
+        dinero: float,
+        adicional: int = None,
+        nombre_mascota: str = None,
+        habilidad_mascota=None,
+    ):
+        temp_aventurero = None
+        match clase:
+            case 1:
+                temp_aventurero = Guerrero(
+                    nombre, id, ptos_habilidad, experiencia, dinero, adicional
+                )
+            case 2:
+                temp_aventurero = Mago(
+                    nombre, id, ptos_habilidad, experiencia, dinero, adicional
+                )
+            case 3:
+                temp_mascota = Mascota(nombre_mascota, habilidad_mascota)
+                temp_aventurero = Ranger(
+                    nombre, id, ptos_habilidad, experiencia, dinero
+                )
+                temp_aventurero.mascota = temp_mascota
+        if temp_aventurero is None or temp_aventurero in self.__aventureros:
+            raise InformacionInvalida()
+        self.__aventureros.append(temp_aventurero)
+        return True
 
     def registrar_mision(self, nombre: int, rango: int, recompensa:float, min_miembros: int = 1):
 
