@@ -1,4 +1,4 @@
-from aventurero import Aventurero
+from .aventurero import Aventurero
 
 
 class Guerrero(Aventurero):
