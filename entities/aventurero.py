@@ -8,19 +8,19 @@ class aventurero(ABC):
         self.__experiencia = experiencia
         self.__dinero = dinero
 
-        @property
-        def nombre(self):
-            return self.__nombre
-        @property
-        def id(self):
-            return self.__id
-        @property
-        def ptos_habilidad(self):
-            return self.__ptos_habilidad
-        @property
-        def experiencia(self):
-            return self.__experiencia
-        @property
-        def dinero(self):
-            return self.__dinero
+    @property
+    def nombre(self):
+        return self.__nombre
+    @property
+    def id(self):
+        return self.__id
+    @property
+    def ptos_habilidad(self):
+        return self.__ptos_habilidad
+    @property
+    def experiencia(self):
+        return self.__experiencia
+    @property
+    def dinero(self):
+        return self.__dinero
                 
