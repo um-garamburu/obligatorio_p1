@@ -1,6 +1,6 @@
 from abc import ABC
 
-class aventurero(ABC):
+class Aventurero(ABC):
     def __init__(self, nombre:str, id:int, ptos_habilidad: int, experiencia: int, dinero: float):
         self.__nombre = nombre
         self.__id = id
