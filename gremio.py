@@ -17,8 +17,13 @@ class Gremio:
     def registrar_aventurero(self):
         pass
 
-    def registrar_mision(self):
-        pass
+    def registrar_mision(self, nombre: int, rango: int, recompensa:float, min_miembros: int = 1):
+
+        if min_miembros == 1:
+            MisionIndividual(nombre=nombre, rango=rango,recompensa=recompensa,completado = False)
+        else:
+            MisionGrupal(nombre=nombre, rango=rango,recompensa=recompensa,miembros=min_miembros,completado = False) 
+            
 
     def realizar_mision(self):
         pass
