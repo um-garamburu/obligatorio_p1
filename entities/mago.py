@@ -17,3 +17,6 @@ class Mago(Aventurero):
     @property
     def mana(self):
         return self.__mana
+    
+    def habilidad_total(self):
+        return self.ptos_habilidad + (self.__mana / 10)

@@ -17,3 +17,6 @@ class Guerrero(Aventurero):
     @property
     def fuerza(self):
         return self.__fuerza
+    
+    def habilidad_total(self):
+        return self.ptos_habilidad + (self.__fuerza / 2)

@@ -23,6 +23,10 @@ class Aventurero(ABC):
     @property
     def dinero(self):
         return self.__dinero
+    
+    @ptos_habilidad.setter
+    def ptos_habilidad(self,nuevos_ptos_habilidad):
+        self.ptos_habilidad = nuevos_ptos_habilidad
                 
     def __eq__(self, nuevo_aventurero):
         self.__id = nuevo_aventurero.id
