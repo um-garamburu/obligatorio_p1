@@ -15,3 +15,9 @@ class Ranger(Aventurero):
     @mascota.setter
     def mascota(self, nueva_mascota):
         self.__mascota = nueva_mascota
+    
+    def habilidad_total(self):
+        if self.__mascota:
+            return self.ptos_habilidad + self.__mascota.ptos_habilidad
+        else:
+            return self.ptos_habilidad

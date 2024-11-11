@@ -51,25 +51,42 @@ class Gremio:
         self.__aventureros.append(temp_aventurero)
         return True
 
-    def registrar_mision(
-        self, nombre: int, rango: int, recompensa: float, min_miembros: int = 1
-    ):
+    def registrar_mision(self, nombre: str, rango: int, recompensa: float, min_miembros: int = 1):
+        for mision in self.__misiones:
+            if mision.nombre == nombre:
+                raise InformacionInvalida()
 
         if min_miembros == 1:
-            MisionIndividual(
-                nombre=nombre, rango=rango, recompensa=recompensa, completado=False
-            )
+            nueva_mision = MisionIndividual(nombre=nombre, rango=rango, recompensa=recompensa, completado=False)
+            self.__misiones.append(nueva_mision)
         else:
-            MisionGrupal(
-                nombre=nombre,
-                rango=rango,
-                recompensa=recompensa,
-                miembros=min_miembros,
-                completado=False,
-            )
+            nueva_mision = MisionGrupal(nombre=nombre,rango=rango,recompensa=recompensa,miembros=min_miembros,completado=False)
+            self.__misiones.append(nueva_mision)
 
-    def realizar_mision(self):
-        pass
+    def realizar_mision(self,mision: object, aventureros:list):
+        
+        if len(aventureros) == 1:
+            habilidad = aventureros[0].habilidad_total
+            nivel = 0
+
+            if habilidad <= 20:
+                nivel = 1
+            elif habilidad <= 40:
+                nivel = 2
+            elif habilidad <= 60:
+                nivel = 3
+            elif habilidad <= 80:
+                nivel = 4 
+            else:
+                nivel = 5
+            
+            if nivel >= mision.rango:
+                mision.completado(True)
+                aventureros[0].ptos_habilidad += mision.recompensa
+             
+
+        
+        
 
     def top_10_misiones_resueltas(self):
         pass
@@ -87,10 +104,17 @@ class Gremio:
 if __name__ == "__main__":
     gremio = Gremio()
     try:
-        gremio.registrar_aventurero(1, "Prueba", 1, 15, 15, 15.15, 45)
-        gremio.registrar_aventurero(1, "Prueba", 1, 15, 15, 15.15, 45)
+        gremio.registrar_mision('mision1',3,100,5)
+        gremio.registrar_mision('mision2',3,100)
+        gremio.registrar_aventurero(1,'av1',1,24,10,0)
+
     except InformacionInvalida as e:
         print(f"Error: {e}")
 
-    for aventureros in gremio.aventureros:
-        print(aventureros.id)
+    for mision in gremio.misiones:
+        print(mision.nombre)
+    
+    for aventurero in gremio.aventureros:
+        print(aventurero.nombre)
+
+
