@@ -23,3 +23,7 @@ class Mision(ABC):
     @property
     def completado(self):
         return self.__completado
+
+    @completado.setter
+    def completado(self, valor: bool):
+        self.__completado = valor
