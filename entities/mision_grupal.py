@@ -8,11 +8,19 @@ class MisionGrupal(Mision):
         rango: int,
         recompensa: float,
         completado: bool,
-        miembros: int,
+        min_miembros: int,
     ):
         super().__init__(nombre, rango, recompensa, completado)
-        self.__miembros = miembros
+        self.__min_miembros = min_miembros
+        self.__aventureros = []
 
     @property
-    def miembros(self):
-        self.__miembros
+    def min_miembros(self):
+        return self.__min_miembros
+
+    @property
+    def aventureros(self):
+        return self.__aventureros
+
+    def agregar_aventurero(self, aventurero):
+        self.__aventureros.append(aventurero)
