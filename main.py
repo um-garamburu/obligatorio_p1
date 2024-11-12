@@ -63,31 +63,59 @@ def menu_principal():
                             raise InformacionInvalida
                     
                     case 3:
+                        adicional = None
                         tiene_mascota = input('Agregar una mascota? (S/N): ')
                         tiene_mascota.upper()
                         if tiene_mascota == 'S':
                             nombre_mascota = input('Ingresar Nombre de la mascota: ')
                             habilidad_mascota = input('ingresar Puntos de habilidad de la mascota: ')
+                        elif tiene_mascota != 'N':
+                            raise InformacionInvalida
+
+
 
                 gremio.registrar_aventurero(clase,nombre,id,ptos_habilidad,experiencia,dinero,adicional,nombre_mascota,habilidad_mascota)
                 print('\nAventurero registrado!\n')
+                for aventureros in gremio.aventureros:
+                    print(aventureros.id)
                 
                         
             except InformacionInvalida as e:                    
-                print(f"***Error: {e}***\n")
+                print(f"*** Error: {e}*** ")
                 
-
-
-
             
         elif opcion == '2':
-            gremio.registrar_mision()
+            try:
+                
+                nombre = input('Ingresar Nombre: ')
+                rango = input('Ingresar Rango: ')
+                rango = int(rango)
+                if rango not in [1,2,3,4,5]:
+                    raise InformacionInvalida
+                recompensa = input('Ingresar Recompensa: ')
+                recompensa = float(recompensa)
+                mision_grupal = input('La mision es Grupal? (S/N): ')
+                mision_grupal = mision_grupal.upper()
+                if mision_grupal == 'S':
+                    min_miembros = input('Ingresar cantidad minima de miembros: ')
+                    min_miembros = int(min_miembros)
+                elif mision_grupal == 'N':
+                    min_miembros = 1 
+                else:
+                    raise InformacionInvalida
+
+                gremio.registrar_mision(nombre,rango,recompensa,min_miembros)
+                for misiones in gremio.misiones:
+                    print(misiones.nombre)
+                    
+            except InformacionInvalida as e:                    
+                print(f"*** Error: {e}*** ")
+
         elif opcion == '3':
             gremio.realizar_mision()
         elif opcion == '4':
             submenu_consultas(gremio)
         elif opcion == '5':
-            Juego_Encendido = False
             break
         else:
             print("Opción inválida. Por favor, elija una opción del menú.")
@@ -117,8 +145,16 @@ def submenu_consultas(gremio):
         else:
             print("Opción inválida. Por favor, elija una opción del submenú.")
 
-# Ejecutar el menú principal
+
+
+
+
+
 if __name__ == "__main__":
     
     bienvenida()
     menu_principal()
+
+   
+    
+   
