@@ -1,5 +1,5 @@
 from gremio import Gremio
-from exceptions import InformacionInvalida
+from exceptions import InformacionInvalida, MisionNoEncontrada, AventureroNoEncontrado
 
 def bienvenida():
     titulo = 'Bienvenido al Simulador de Gremio de Aventureros!'
@@ -76,6 +76,8 @@ def menu_principal():
 
                 gremio.registrar_aventurero(clase,nombre,id,ptos_habilidad,experiencia,dinero,adicional,nombre_mascota,habilidad_mascota)
                 print('\nAventurero registrado!\n')
+
+                ### El siguiente bucle esta unicamente para probar de que se esten registrando las Misiones al momento de correr el script (borrar al final) 
                 for aventureros in gremio.aventureros:
                     print(aventureros.id)
                 
@@ -105,6 +107,8 @@ def menu_principal():
                     raise InformacionInvalida
 
                 gremio.registrar_mision(nombre,rango,recompensa,min_miembros)
+
+### El siguiente bucle esta unicamente para probar de que se esten registrando las Misiones al momento de correr el script (borrar al final) 
                 for misiones in gremio.misiones:
                     print(misiones.nombre)
                     
@@ -112,7 +116,39 @@ def menu_principal():
                 print(f"*** Error: {e}*** ")
 
         elif opcion == '3':
-            gremio.realizar_mision()
+            try:
+                nombre_mision = input('Ingresar el nombre de la mision que desea realizar: ')
+                mision_elegida = None
+                for mision in gremio.misiones:
+                    if mision.nombre == nombre_mision:
+                        mision_elegida = mision.nombre
+                
+                if mision_elegida == None:
+                    raise MisionNoEncontrada
+                
+                aventureros = []
+                while True:
+                    nuevo_aventurero = input('Ingresar ID de aventurero: ')
+                    nuevo_aventurero = int(nuevo_aventurero)
+                    aventureros.append(nuevo_aventurero)
+                    mas_aventureros = input('Desea Ingresar mas aventureros? (S/N): ')
+                    mas_aventureros = mas_aventureros.upper()
+                    if mas_aventureros == 'N':
+                        break
+                print(mision_elegida)
+                print(aventureros)
+                gremio.realizar_mision(mision_elegida,aventureros)
+
+
+            except InformacionInvalida as e:                    
+                print(f"*** Error: {e}*** ")
+            except MisionNoEncontrada as e:                    
+                print(f"*** Error: {e}*** ")
+            except AventureroNoEncontrado as e:                    
+                print(f"*** Error: {e}*** ")
+                    
+
+
         elif opcion == '4':
             submenu_consultas(gremio)
         elif opcion == '5':
@@ -120,7 +156,6 @@ def menu_principal():
         else:
             print("Opción inválida. Por favor, elija una opción del menú.")
 
-# Submenú para consultas
 def submenu_consultas(gremio):
     while True:
         print("\nSeleccione una opción de consulta:")
@@ -131,7 +166,7 @@ def submenu_consultas(gremio):
         print("5. Volver al Menú Principal")
         
         opcion = input("Elija una opción: ")
-
+### Cambiar los nombres de los metodos para que coincidan con los metodos del gremio
         if opcion == '1':
             gremio.ver_top_10_aventureros_misiones()
         elif opcion == '2':
