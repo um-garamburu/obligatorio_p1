@@ -42,6 +42,9 @@ class Aventurero(ABC):
 
     def agregar_mision_completada(self, mision):
         self.__misiones.append(mision)
+    
+    def cantidad_misiones_resueltas(self):
+        return len(self.__misiones)
 
     def agregar_recompensa(self, recompensa):
         self.__dinero += round(recompensa, 2)

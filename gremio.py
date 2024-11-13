@@ -48,8 +48,9 @@ class Gremio:
                 if nombre_mascota and habilidad_mascota:
                     temp_mascota = Mascota(nombre_mascota, habilidad_mascota)
                     temp_aventurero.mascota = temp_mascota
-        # if temp_aventurero is None or temp_aventurero in self.__aventureros:
-        #     raise InformacionInvalida()
+            case _:
+                raise InformacionInvalida()
+                
         self.__aventureros.append(temp_aventurero)
         return True
 
@@ -144,43 +145,56 @@ class Gremio:
         return temp_mision.completado
 
     def top_10_misiones_resueltas(self):
-        pass
+        aventureros_ordenados = sorted(self.__aventureros, key = lambda a: (-a.cantidad_misiones_resueltas(), a.nombre))
+        lista_minima = min(len(aventureros_ordenados),10)
+        print('\n**************************')
+        for i in range(lista_minima):
+            print(f'{i+1}. Aventurero: {self.__aventureros[i].nombre}, habilidad total: {self.__aventureros[i].habilidad_total()}, Misiones resueltas: {self.__aventureros[i].cantidad_misiones_resueltas()}')
+        print('**************************')            
 
     def top_10_habilidad(self):
-        pass
+        aventureros_ordenados = sorted(self.__aventureros, key = lambda a: (-a.habilidad_total(), a.nombre))
+        lista_minima = min( len(aventureros_ordenados), 10)
+        print('\n**************************')
+        for i in range(lista_minima):
+            print(f'{i+1}. Aventurero: {self.__aventureros[i].nombre}, habilidad total: {self.__aventureros[i].habilidad_total()}')
+        print('**************************')
 
-    def top_10_misiones_recompensa(self):
-        pass
+
+    def top_5_misiones_recompensa(self):
+        misiones_ordenadas = sorted(self.__misiones, key = lambda m: (-m.recompensa , m.nombre))
+        lista_minima = min(len(misiones_ordenadas),5)
+        print('\n**************************')
+        for i in range(lista_minima):
+            print(f'{i+1}. Mision: {misiones_ordenadas[i].nombre}, recompensa: {misiones_ordenadas[i].recompensa}')
+        print('**************************')
 
     def aventureros_por_clase(self):
-        pass
-
-
-if __name__ == "__main__":
-    gremio = Gremio()
-    try:
-        gremio.registrar_mision("mision1", 1, 100, 5)
-        gremio.registrar_mision("mision3", 2, 100, 2)
-        gremio.registrar_mision("mision2", 3, 100)
-        gremio.registrar_aventurero(1, "av1", 1, 24, 0, 150, 50)
-        gremio.registrar_aventurero(2, "av2", 2, 10, 0, 150, 200)
-        gremio.registrar_aventurero(3, "av3", 3, 7, 0, 150, 0, "msc1", 40)
-        gremio.registrar_aventurero(3, "av4", 4, 7, 0, 150)
-        gremio.registrar_aventurero(1, "av5", 5, 24, 0, 150, 50)
-        gremio.realizar_mision("mision1", [1, 2, 3, 4, 5])
-
-    except InformacionInvalida as e:
-        print(f"Error: {e}")
-    except RangoInsuficiente as e:
-        print(f"Error: {e}")
-
-    for mision in gremio.misiones:
-        print(mision.nombre)
-
-    for aventurero in gremio.aventureros:
-        print(
-            aventurero.nombre,
-            aventurero.id,
-            aventurero.experiencia,
-            aventurero.dinero,
-        )
+        rangers = []
+        magos = []
+        guerreros = []
+        for aventurero in self.__aventureros:
+            if isinstance(aventurero, Ranger):
+                rangers.append(aventurero)
+            elif isinstance(aventurero, Mago):
+                magos.append(aventurero)
+            elif isinstance(aventurero, Guerrero):
+                guerreros.append(aventurero)
+        rangers = sorted(rangers, key = lambda a: a.nombre)
+        magos = sorted(magos, key = lambda a: a.nombre)
+        guerreros = sorted(guerreros, key = lambda a: a.nombre)
+        print('\n**************************')
+        if rangers:
+            print('Rangers:')
+            for ranger in rangers:
+                print(f'- Nombre: {ranger.nombre}, ID: {ranger.id}, Habilidad: {ranger.habilidad_total()}')
+        if magos:
+            print('Magos:')
+            for mago in magos:
+                print(f'- Nombre: {mago.nombre}, ID: {mago.id}, Habilidad: {mago.habilidad_total()}')
+        if guerreros:
+            print('Guerreros:')
+            for guerrero in guerreros:
+                print(f'- Nombre: {guerrero.nombre}, ID: {guerrero.id}, Habilidad: {guerrero.habilidad_total()}')
+        print('**************************')
+        
