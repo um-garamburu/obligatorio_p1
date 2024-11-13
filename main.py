@@ -17,7 +17,7 @@ def menu_principal():
         print("2. Registrar Misión")
         print("3. Realizar Misión")
         print("4. Otras Consultas")
-        print("5. Salir\n")
+        print("5. Salir")
         
         opcion = input("Ingresar Opcion: ")
 
@@ -74,16 +74,13 @@ def menu_principal():
 
 
 
-                gremio.registrar_aventurero(clase,nombre,id,ptos_habilidad,experiencia,dinero,adicional,nombre_mascota,habilidad_mascota)
-                print('\nAventurero registrado!\n')
-
-                ### El siguiente bucle esta unicamente para probar de que se esten registrando las Misiones al momento de correr el script (borrar al final) 
-                for aventureros in gremio.aventureros:
-                    print(aventureros.id)
+                result = gremio.registrar_aventurero(clase,nombre,id,ptos_habilidad,experiencia,dinero,adicional,nombre_mascota,habilidad_mascota)
+                if result:
+                    print('\nAventurero registrado con éxito!\n')
                 
                         
             except InformacionInvalida as e:                    
-                print(f"*** Error: {e}*** ")
+                print(f"*** Error: {e} ***")
                 
             
         elif opcion == '2':
@@ -106,14 +103,12 @@ def menu_principal():
                 else:
                     raise InformacionInvalida
 
-                gremio.registrar_mision(nombre,rango,recompensa,min_miembros)
-
-### El siguiente bucle esta unicamente para probar de que se esten registrando las Misiones al momento de correr el script (borrar al final) 
-                for misiones in gremio.misiones:
-                    print(misiones.nombre)
+                reult = gremio.registrar_mision(nombre,rango,recompensa,min_miembros)
+                if result:
+                    print('\nMision registrada con éxito!\n')
                     
             except InformacionInvalida as e:                    
-                print(f"*** Error: {e}*** ")
+                print(f"*** Error: {e} ***")
 
         elif opcion == '3':
             try:
@@ -135,9 +130,9 @@ def menu_principal():
                     mas_aventureros = mas_aventureros.upper()
                     if mas_aventureros == 'N':
                         break
-                print(mision_elegida)
-                print(aventureros)
-                gremio.realizar_mision(mision_elegida,aventureros)
+                result = gremio.realizar_mision(mision_elegida,aventureros)
+                if result:
+                    print('\nMision realizada con éxito!\n')
 
 
             except InformacionInvalida as e:                    
@@ -166,15 +161,14 @@ def submenu_consultas(gremio):
         print("5. Volver al Menú Principal")
         
         opcion = input("Elija una opción: ")
-### Cambiar los nombres de los metodos para que coincidan con los metodos del gremio
         if opcion == '1':
-            gremio.ver_top_10_aventureros_misiones()
+            gremio.top_10_misiones_resueltas()
         elif opcion == '2':
-            gremio.ver_top_10_aventureros_habilidad()
+            gremio.top_10_habilidad()
         elif opcion == '3':
-            gremio.ver_top_5_misiones_recompensa()
+            gremio.top_5_misiones_recompensa()
         elif opcion == '4':
-            gremio.ver_aventureros_por_tipo()
+            gremio.aventureros_por_clase()
         elif opcion == '5':
             break
         else:
