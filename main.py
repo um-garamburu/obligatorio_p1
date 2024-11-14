@@ -69,6 +69,7 @@ def menu_principal():
                         if tiene_mascota == 'S':
                             nombre_mascota = input('Ingresar Nombre de la mascota: ')
                             habilidad_mascota = input('ingresar Puntos de habilidad de la mascota: ')
+                            habilidad_mascota = int(habilidad_mascota)
                         elif tiene_mascota != 'N':
                             raise InformacionInvalida
 

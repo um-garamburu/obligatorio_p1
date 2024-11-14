@@ -1,5 +1,5 @@
 from entities import Guerrero, Mago, Mascota, MisionGrupal, MisionIndividual, Ranger
-from exceptions import InformacionInvalida, RangoInsuficiente
+from exceptions import InformacionInvalida, RangoInsuficiente, MisionNoEncontrada, AventureroNoEncontrado
 
 
 class Gremio:
@@ -84,7 +84,7 @@ class Gremio:
                 temp_mision = mision
                 break
         if mision is None:
-            raise InformacionInvalida()
+            raise MisionNoEncontrada()
 
         if isinstance(temp_mision, MisionIndividual):
             if len(aventureros_id) > 1:
@@ -100,7 +100,7 @@ class Gremio:
                     temp_avent = aventurero
                     aventureros_list.append(temp_avent)
             if temp_avent is None:
-                raise InformacionInvalida()
+                raise AventureroNoEncontrado()
 
         for aventurero_encontrado in aventureros_list:
             # print(aventurero_encontrado.habilidad_total())
