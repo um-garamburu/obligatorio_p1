@@ -2,3 +2,4 @@ from .informacionInvalida import InformacionInvalida
 from .rangoInsuficiente import RangoInsuficiente
 from .aventurero_no_encontrado import AventureroNoEncontrado
 from .mision_no_encontrada import MisionNoEncontrada
+from .mision_completada import MisionCompletada

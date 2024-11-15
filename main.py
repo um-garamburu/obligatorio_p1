@@ -1,5 +1,5 @@
 from gremio import Gremio
-from exceptions import InformacionInvalida, MisionNoEncontrada, AventureroNoEncontrado
+from exceptions import InformacionInvalida, MisionNoEncontrada, AventureroNoEncontrado, RangoInsuficiente, MisionCompletada
 
 
 def bienvenida():
@@ -27,8 +27,9 @@ def menu_principal():
 
             try:
                 clase = input(
-                    "\nElija la clase del aventurero:\n1. Guerrero\n2. Mago\n3. Ranger\nInrgese numero de opcion: "
-                )
+                    "\nElija la clase del aventurero:\n1. Guerrero\n2. Mago\n3. Ranger\nInrgese numero de opcion: ")
+                if clase == '':
+                    raise InformacionInvalida
                 clase = int(clase)
                 if clase not in [1, 2, 3]:
                     raise InformacionInvalida
@@ -36,17 +37,25 @@ def menu_principal():
                 nombre = input("Ingrese el nombre del aventurero: ")
 
                 id = input("Ingresar el ID: ")
+                if id =='':
+                    raise InformacionInvalida
                 id = int(id)
 
                 ptos_habilidad = input("Ingrese puntos de habilidad (0-100): ")
+                if ptos_habilidad == '':
+                    raise InformacionInvalida
                 ptos_habilidad = int(ptos_habilidad)
                 if ptos_habilidad < 0 or ptos_habilidad > 100:
                     raise InformacionInvalida
 
                 experiencia = input("Ingrese Experiencia del aventurero: ")
+                if experiencia == '':
+                    raise InformacionInvalida
                 experiencia = int(experiencia)
 
                 dinero = input("Ingresar Dinero del aventurero: ")
+                if dinero == '':
+                    raise InformacionInvalida
                 dinero = float(dinero)
 
                 nombre_mascota = None
@@ -56,12 +65,16 @@ def menu_principal():
                 match clase:
                     case 1:
                         adicional = input("Ingresar Fuerza (0-100): ")
+                        if adicional == '':
+                            raise InformacionInvalida
                         adicional = int(adicional)
                         if adicional < 0 or adicional > 100:
                             raise InformacionInvalida
 
                     case 2:
                         adicional = input("Ingresar mana (0-1000): ")
+                        if adicional == '':
+                            raise InformacionInvalida
                         adicional = int(adicional)
                         if adicional < 0 or adicional > 1000:
                             raise InformacionInvalida
@@ -75,6 +88,8 @@ def menu_principal():
                             habilidad_mascota = input(
                                 "ingresar Puntos de habilidad de la mascota: "
                             )
+                            if habilidad_mascota == '':
+                                raise InformacionInvalida
                             habilidad_mascota = int(habilidad_mascota)
                         elif tiene_mascota != "N":
                             raise InformacionInvalida
@@ -101,15 +116,21 @@ def menu_principal():
 
                 nombre = input("Ingresar Nombre: ")
                 rango = input("Ingresar Rango: ")
+                if rango == '':
+                    raise InformacionInvalida
                 rango = int(rango)
                 if rango not in [1, 2, 3, 4, 5]:
                     raise InformacionInvalida
                 recompensa = input("Ingresar Recompensa: ")
+                if recompensa == '':
+                    raise InformacionInvalida
                 recompensa = float(recompensa)
                 mision_grupal = input("La mision es Grupal? (S/N): ")
                 mision_grupal = mision_grupal.upper()
                 if mision_grupal == "S":
                     min_miembros = input("Ingresar cantidad minima de miembros: ")
+                    if min_miembros == '':
+                        raise InformacionInvalida
                     min_miembros = int(min_miembros)
                 elif mision_grupal == "N":
                     min_miembros = 1
@@ -139,6 +160,8 @@ def menu_principal():
                 aventureros = []
                 while True:
                     nuevo_aventurero = input("Ingresar ID de aventurero: ")
+                    if nuevo_aventurero == '':
+                        raise InformacionInvalida
                     nuevo_aventurero = int(nuevo_aventurero)
                     aventureros.append(nuevo_aventurero)
                     mas_aventureros = input("Desea Ingresar mas aventureros? (S/N): ")
@@ -154,6 +177,10 @@ def menu_principal():
             except MisionNoEncontrada as e:
                 print(f"*** Error: {e}*** ")
             except AventureroNoEncontrado as e:
+                print(f"*** Error: {e}*** ")
+            except RangoInsuficiente as e:
+                print(f"*** Error: {e}*** ")
+            except MisionCompletada as e:
                 print(f"*** Error: {e}*** ")
 
         elif opcion == "4":

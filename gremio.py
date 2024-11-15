@@ -4,7 +4,7 @@ from exceptions import (
     RangoInsuficiente,
     MisionNoEncontrada,
     AventureroNoEncontrado,
-)
+    MisionCompletada)
 
 
 class Gremio:
@@ -90,6 +90,8 @@ class Gremio:
                 break
         if mision is None:
             raise MisionNoEncontrada()
+        if mision.completado:
+            raise MisionCompletada()
 
         if isinstance(temp_mision, MisionIndividual):
             if len(aventureros_id) > 1:
@@ -154,12 +156,19 @@ class Gremio:
             self.__aventureros,
             key=lambda a: (-a.cantidad_misiones_resueltas(), a.nombre),
         )
-        lista_minima = min(len(aventureros_ordenados), 10)
+        aventureros_con_mision = []
+        for aventurero in aventureros_ordenados:
+            if aventurero.cantidad_misiones_resueltas() > 0:
+                aventureros_con_mision.append(aventurero)
         print("\n**************************")
-        for i in range(lista_minima):
-            print(
-                f"{i+1}. Aventurero: {aventureros_ordenados[i].nombre}, habilidad total: {aventureros_ordenados[i].habilidad_total()}, Misiones resueltas: {self.__aventureros[i].cantidad_misiones_resueltas()}"
-            )
+        if len(aventureros_con_mision):
+            lista_minima = min(len(aventureros_con_mision), 10)
+            for i in range(lista_minima):
+                print(
+                    f"{i+1}. Aventurero: {aventureros_con_mision[i].nombre}, habilidad total: {aventureros_con_mision[i].habilidad_total()}, Misiones resueltas: {aventureros_con_mision[i].cantidad_misiones_resueltas()}"
+                )
+        else:
+            print('No hay aventureros con misiones resueltas!')
         print("**************************")
 
     def top_10_habilidad(self):
@@ -168,10 +177,13 @@ class Gremio:
         )
         lista_minima = min(len(aventureros_ordenados), 10)
         print("\n**************************")
-        for i in range(lista_minima):
-            print(
-                f"{i+1}. Aventurero: {aventureros_ordenados[i].nombre}, habilidad total: {aventureros_ordenados[i].habilidad_total()}"
-            )
+        if len(aventureros_ordenados):
+            for i in range(lista_minima):
+                print(
+                    f"{i+1}. Aventurero: {aventureros_ordenados[i].nombre}, habilidad total: {aventureros_ordenados[i].habilidad_total()}"
+                )
+        else:
+            print('No hay aventureros creados!')
         print("**************************")
 
     def top_5_misiones_recompensa(self):
@@ -180,10 +192,14 @@ class Gremio:
         )
         lista_minima = min(len(misiones_ordenadas), 5)
         print("\n**************************")
-        for i in range(lista_minima):
-            print(
-                f"{i+1}. Mision: {misiones_ordenadas[i].nombre}, recompensa: {misiones_ordenadas[i].recompensa}"
-            )
+        if len(misiones_ordenadas):
+
+            for i in range(lista_minima):
+                print(
+                    f"{i+1}. Mision: {misiones_ordenadas[i].nombre}, recompensa: {misiones_ordenadas[i].recompensa}"
+                )
+        else:
+            print('No hay misiones registradas!')
         print("**************************")
 
     def aventureros_por_clase(self):
@@ -201,22 +217,24 @@ class Gremio:
         magos = sorted(magos, key=lambda a: a.nombre)
         guerreros = sorted(guerreros, key=lambda a: a.nombre)
         print("\n**************************")
-        if rangers:
+        if len(rangers):
             print("Rangers:")
             for ranger in rangers:
                 print(
                     f"- Nombre: {ranger.nombre}, ID: {ranger.id}, Habilidad: {ranger.habilidad_total()}"
                 )
-        if magos:
+        if len(magos):
             print("Magos:")
             for mago in magos:
                 print(
                     f"- Nombre: {mago.nombre}, ID: {mago.id}, Habilidad: {mago.habilidad_total()}"
                 )
-        if guerreros:
+        if len(guerreros):
             print("Guerreros:")
             for guerrero in guerreros:
                 print(
                     f"- Nombre: {guerrero.nombre}, ID: {guerrero.id}, Habilidad: {guerrero.habilidad_total()}"
                 )
+        if len(rangers) + len(magos) + len(guerreros) == 0:
+            print('No hay aventureros registrados!')
         print("**************************")
