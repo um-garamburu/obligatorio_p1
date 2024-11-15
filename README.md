@@ -1,3 +1,5 @@
+Guillermo Aramburu - Gonzalo Bascans
+
 Descripción del Diagrama
 Se crea una clase Gremio donde se van a almacenar dos listas, aventureros y misiones.
 Misiones es una clase abstracta, que heredan de ella mision individual y mision grupal.
