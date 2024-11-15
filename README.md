@@ -1,5 +1,8 @@
 Guillermo Aramburu - Gonzalo Bascans
 
+Link UML
+https://lucid.app/lucidchart/bc9f9d32-bcb0-452b-b017-33e4e07b3461/edit?viewport_loc=-862%2C17%2C4052%2C2026%2CHWEp-vi-RSFO&invitationId=inv_3ece2c1e-d191-49a3-bcad-c25d6051d490
+
 Descripción del Diagrama
 Se crea una clase Gremio donde se van a almacenar dos listas, aventureros y misiones.
 Misiones es una clase abstracta, que heredan de ella mision individual y mision grupal.
