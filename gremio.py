@@ -1,5 +1,10 @@
 from entities import Guerrero, Mago, Mascota, MisionGrupal, MisionIndividual, Ranger
-from exceptions import InformacionInvalida, RangoInsuficiente, MisionNoEncontrada, AventureroNoEncontrado
+from exceptions import (
+    InformacionInvalida,
+    RangoInsuficiente,
+    MisionNoEncontrada,
+    AventureroNoEncontrado,
+)
 
 
 class Gremio:
@@ -50,7 +55,7 @@ class Gremio:
                     temp_aventurero.mascota = temp_mascota
             case _:
                 raise InformacionInvalida()
-                
+
         self.__aventureros.append(temp_aventurero)
         return True
 
@@ -145,29 +150,41 @@ class Gremio:
         return temp_mision.completado
 
     def top_10_misiones_resueltas(self):
-        aventureros_ordenados = sorted(self.__aventureros, key = lambda a: (-a.cantidad_misiones_resueltas(), a.nombre))
-        lista_minima = min(len(aventureros_ordenados),10)
-        print('\n**************************')
+        aventureros_ordenados = sorted(
+            self.__aventureros,
+            key=lambda a: (-a.cantidad_misiones_resueltas(), a.nombre),
+        )
+        lista_minima = min(len(aventureros_ordenados), 10)
+        print("\n**************************")
         for i in range(lista_minima):
-            print(f'{i+1}. Aventurero: {self.__aventureros[i].nombre}, habilidad total: {self.__aventureros[i].habilidad_total()}, Misiones resueltas: {self.__aventureros[i].cantidad_misiones_resueltas()}')
-        print('**************************')            
+            print(
+                f"{i+1}. Aventurero: {aventureros_ordenados[i].nombre}, habilidad total: {aventureros_ordenados[i].habilidad_total()}, Misiones resueltas: {self.__aventureros[i].cantidad_misiones_resueltas()}"
+            )
+        print("**************************")
 
     def top_10_habilidad(self):
-        aventureros_ordenados = sorted(self.__aventureros, key = lambda a: (-a.habilidad_total(), a.nombre))
-        lista_minima = min( len(aventureros_ordenados), 10)
-        print('\n**************************')
+        aventureros_ordenados = sorted(
+            self.__aventureros, key=lambda a: (-a.habilidad_total(), a.nombre)
+        )
+        lista_minima = min(len(aventureros_ordenados), 10)
+        print("\n**************************")
         for i in range(lista_minima):
-            print(f'{i+1}. Aventurero: {self.__aventureros[i].nombre}, habilidad total: {self.__aventureros[i].habilidad_total()}')
-        print('**************************')
-
+            print(
+                f"{i+1}. Aventurero: {aventureros_ordenados[i].nombre}, habilidad total: {aventureros_ordenados[i].habilidad_total()}"
+            )
+        print("**************************")
 
     def top_5_misiones_recompensa(self):
-        misiones_ordenadas = sorted(self.__misiones, key = lambda m: (-m.recompensa , m.nombre))
-        lista_minima = min(len(misiones_ordenadas),5)
-        print('\n**************************')
+        misiones_ordenadas = sorted(
+            self.__misiones, key=lambda m: (-m.recompensa, m.nombre)
+        )
+        lista_minima = min(len(misiones_ordenadas), 5)
+        print("\n**************************")
         for i in range(lista_minima):
-            print(f'{i+1}. Mision: {misiones_ordenadas[i].nombre}, recompensa: {misiones_ordenadas[i].recompensa}')
-        print('**************************')
+            print(
+                f"{i+1}. Mision: {misiones_ordenadas[i].nombre}, recompensa: {misiones_ordenadas[i].recompensa}"
+            )
+        print("**************************")
 
     def aventureros_por_clase(self):
         rangers = []
@@ -180,21 +197,26 @@ class Gremio:
                 magos.append(aventurero)
             elif isinstance(aventurero, Guerrero):
                 guerreros.append(aventurero)
-        rangers = sorted(rangers, key = lambda a: a.nombre)
-        magos = sorted(magos, key = lambda a: a.nombre)
-        guerreros = sorted(guerreros, key = lambda a: a.nombre)
-        print('\n**************************')
+        rangers = sorted(rangers, key=lambda a: a.nombre)
+        magos = sorted(magos, key=lambda a: a.nombre)
+        guerreros = sorted(guerreros, key=lambda a: a.nombre)
+        print("\n**************************")
         if rangers:
-            print('Rangers:')
+            print("Rangers:")
             for ranger in rangers:
-                print(f'- Nombre: {ranger.nombre}, ID: {ranger.id}, Habilidad: {ranger.habilidad_total()}')
+                print(
+                    f"- Nombre: {ranger.nombre}, ID: {ranger.id}, Habilidad: {ranger.habilidad_total()}"
+                )
         if magos:
-            print('Magos:')
+            print("Magos:")
             for mago in magos:
-                print(f'- Nombre: {mago.nombre}, ID: {mago.id}, Habilidad: {mago.habilidad_total()}')
+                print(
+                    f"- Nombre: {mago.nombre}, ID: {mago.id}, Habilidad: {mago.habilidad_total()}"
+                )
         if guerreros:
-            print('Guerreros:')
+            print("Guerreros:")
             for guerrero in guerreros:
-                print(f'- Nombre: {guerrero.nombre}, ID: {guerrero.id}, Habilidad: {guerrero.habilidad_total()}')
-        print('**************************')
-        
+                print(
+                    f"- Nombre: {guerrero.nombre}, ID: {guerrero.id}, Habilidad: {guerrero.habilidad_total()}"
+                )
+        print("**************************")

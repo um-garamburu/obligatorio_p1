@@ -1,16 +1,18 @@
 from gremio import Gremio
 from exceptions import InformacionInvalida, MisionNoEncontrada, AventureroNoEncontrado
 
+
 def bienvenida():
-    titulo = 'Bienvenido al Simulador de Gremio de Aventureros!'
+    titulo = "Bienvenido al Simulador de Gremio de Aventureros!"
     len_titulo = len(titulo) + 4
-    print('*'*len_titulo)
-    print('* '+titulo+' *')
-    print('*'*len_titulo)
+    print("*" * len_titulo)
+    print("* " + titulo + " *")
+    print("*" * len_titulo)
+
 
 def menu_principal():
     gremio = Gremio()
-    
+
     while True:
         print("\nSeleccione una opción:")
         print("1. Registrar Aventurero")
@@ -18,31 +20,33 @@ def menu_principal():
         print("3. Realizar Misión")
         print("4. Otras Consultas")
         print("5. Salir")
-        
+
         opcion = input("Ingresar Opcion: ")
 
-        if opcion == '1':
-        
+        if opcion == "1":
+
             try:
-                clase = input('\nElija la clase del aventurero:\n1. Guerrero\n2. Mago\n3. Ranger\nInrgese numero de opcion: ')
+                clase = input(
+                    "\nElija la clase del aventurero:\n1. Guerrero\n2. Mago\n3. Ranger\nInrgese numero de opcion: "
+                )
                 clase = int(clase)
-                if clase not in [1,2,3]:
+                if clase not in [1, 2, 3]:
                     raise InformacionInvalida
 
-                nombre = input('Ingrese el nombre del aventurero: ')
+                nombre = input("Ingrese el nombre del aventurero: ")
 
-                id = input('Ingresar el ID: ')
+                id = input("Ingresar el ID: ")
                 id = int(id)
-                
-                ptos_habilidad = input('Ingrese puntos de habilidad (0-100): ')
+
+                ptos_habilidad = input("Ingrese puntos de habilidad (0-100): ")
                 ptos_habilidad = int(ptos_habilidad)
-                if  ptos_habilidad < 0 or ptos_habilidad > 100:
+                if ptos_habilidad < 0 or ptos_habilidad > 100:
                     raise InformacionInvalida
-                
-                experiencia = input('Ingrese Experiencia del aventurero: ')
+
+                experiencia = input("Ingrese Experiencia del aventurero: ")
                 experiencia = int(experiencia)
-                
-                dinero = input ('Ingresar Dinero del aventurero: ')
+
+                dinero = input("Ingresar Dinero del aventurero: ")
                 dinero = float(dinero)
 
                 nombre_mascota = None
@@ -51,106 +55,114 @@ def menu_principal():
 
                 match clase:
                     case 1:
-                        adicional = input('Ingresar Fuerza (0-100): ')
+                        adicional = input("Ingresar Fuerza (0-100): ")
                         adicional = int(adicional)
                         if adicional < 0 or adicional > 100:
                             raise InformacionInvalida
-                    
+
                     case 2:
-                        adicional = input('Ingresar mana (0-100): ')
+                        adicional = input("Ingresar mana (0-1000): ")
                         adicional = int(adicional)
-                        if adicional < 0 or adicional > 100:
+                        if adicional < 0 or adicional > 1000:
                             raise InformacionInvalida
-                    
+
                     case 3:
                         adicional = None
-                        tiene_mascota = input('Agregar una mascota? (S/N): ')
-                        tiene_mascota.upper()
-                        if tiene_mascota == 'S':
-                            nombre_mascota = input('Ingresar Nombre de la mascota: ')
-                            habilidad_mascota = input('ingresar Puntos de habilidad de la mascota: ')
+                        tiene_mascota = input("Agregar una mascota? (S/N): ").upper()
+                        # tiene_mascota.upper()
+                        if tiene_mascota == "S":
+                            nombre_mascota = input("Ingresar Nombre de la mascota: ")
+                            habilidad_mascota = input(
+                                "ingresar Puntos de habilidad de la mascota: "
+                            )
                             habilidad_mascota = int(habilidad_mascota)
-                        elif tiene_mascota != 'N':
+                        elif tiene_mascota != "N":
                             raise InformacionInvalida
 
-
-
-                result = gremio.registrar_aventurero(clase,nombre,id,ptos_habilidad,experiencia,dinero,adicional,nombre_mascota,habilidad_mascota)
+                result = gremio.registrar_aventurero(
+                    clase,
+                    nombre,
+                    id,
+                    ptos_habilidad,
+                    experiencia,
+                    dinero,
+                    adicional,
+                    nombre_mascota,
+                    habilidad_mascota,
+                )
                 if result:
-                    print('\nAventurero registrado con éxito!\n')
-                
-                        
-            except InformacionInvalida as e:                    
+                    print("\nAventurero registrado con éxito!\n")
+
+            except InformacionInvalida as e:
                 print(f"*** Error: {e} ***")
-                
-            
-        elif opcion == '2':
+
+        elif opcion == "2":
             try:
-                
-                nombre = input('Ingresar Nombre: ')
-                rango = input('Ingresar Rango: ')
+
+                nombre = input("Ingresar Nombre: ")
+                rango = input("Ingresar Rango: ")
                 rango = int(rango)
-                if rango not in [1,2,3,4,5]:
+                if rango not in [1, 2, 3, 4, 5]:
                     raise InformacionInvalida
-                recompensa = input('Ingresar Recompensa: ')
+                recompensa = input("Ingresar Recompensa: ")
                 recompensa = float(recompensa)
-                mision_grupal = input('La mision es Grupal? (S/N): ')
+                mision_grupal = input("La mision es Grupal? (S/N): ")
                 mision_grupal = mision_grupal.upper()
-                if mision_grupal == 'S':
-                    min_miembros = input('Ingresar cantidad minima de miembros: ')
+                if mision_grupal == "S":
+                    min_miembros = input("Ingresar cantidad minima de miembros: ")
                     min_miembros = int(min_miembros)
-                elif mision_grupal == 'N':
-                    min_miembros = 1 
+                elif mision_grupal == "N":
+                    min_miembros = 1
                 else:
                     raise InformacionInvalida
 
-                reult = gremio.registrar_mision(nombre,rango,recompensa,min_miembros)
+                reult = gremio.registrar_mision(nombre, rango, recompensa, min_miembros)
                 if result:
-                    print('\nMision registrada con éxito!\n')
-                    
-            except InformacionInvalida as e:                    
+                    print("\nMision registrada con éxito!\n")
+
+            except InformacionInvalida as e:
                 print(f"*** Error: {e} ***")
 
-        elif opcion == '3':
+        elif opcion == "3":
             try:
-                nombre_mision = input('Ingresar el nombre de la mision que desea realizar: ')
+                nombre_mision = input(
+                    "Ingresar el nombre de la mision que desea realizar: "
+                )
                 mision_elegida = None
                 for mision in gremio.misiones:
                     if mision.nombre == nombre_mision:
                         mision_elegida = mision.nombre
-                
+
                 if mision_elegida == None:
                     raise MisionNoEncontrada
-                
+
                 aventureros = []
                 while True:
-                    nuevo_aventurero = input('Ingresar ID de aventurero: ')
+                    nuevo_aventurero = input("Ingresar ID de aventurero: ")
                     nuevo_aventurero = int(nuevo_aventurero)
                     aventureros.append(nuevo_aventurero)
-                    mas_aventureros = input('Desea Ingresar mas aventureros? (S/N): ')
+                    mas_aventureros = input("Desea Ingresar mas aventureros? (S/N): ")
                     mas_aventureros = mas_aventureros.upper()
-                    if mas_aventureros == 'N':
+                    if mas_aventureros == "N":
                         break
-                result = gremio.realizar_mision(mision_elegida,aventureros)
+                result = gremio.realizar_mision(mision_elegida, aventureros)
                 if result:
-                    print('\nMision realizada con éxito!\n')
+                    print("\nMision realizada con éxito!\n")
 
-
-            except InformacionInvalida as e:                    
+            except InformacionInvalida as e:
                 print(f"*** Error: {e}*** ")
-            except MisionNoEncontrada as e:                    
+            except MisionNoEncontrada as e:
                 print(f"*** Error: {e}*** ")
-            except AventureroNoEncontrado as e:                    
+            except AventureroNoEncontrado as e:
                 print(f"*** Error: {e}*** ")
-                    
 
-
-        elif opcion == '4':
+        elif opcion == "4":
             submenu_consultas(gremio)
-        elif opcion == '5':
+        elif opcion == "5":
             break
         else:
             print("Opción inválida. Por favor, elija una opción del menú.")
+
 
 def submenu_consultas(gremio):
     while True:
@@ -160,31 +172,23 @@ def submenu_consultas(gremio):
         print("3. Ver Top 5 Misiones con Mayor Recompensa")
         print("4. Ver Aventureros por Tipo (Guerrero, Mago, Ranger)")
         print("5. Volver al Menú Principal")
-        
+
         opcion = input("Elija una opción: ")
-        if opcion == '1':
+        if opcion == "1":
             gremio.top_10_misiones_resueltas()
-        elif opcion == '2':
+        elif opcion == "2":
             gremio.top_10_habilidad()
-        elif opcion == '3':
+        elif opcion == "3":
             gremio.top_5_misiones_recompensa()
-        elif opcion == '4':
+        elif opcion == "4":
             gremio.aventureros_por_clase()
-        elif opcion == '5':
+        elif opcion == "5":
             break
         else:
             print("Opción inválida. Por favor, elija una opción del submenú.")
 
 
-
-
-
-
 if __name__ == "__main__":
-    
+
     bienvenida()
     menu_principal()
-
-   
-    
-   
